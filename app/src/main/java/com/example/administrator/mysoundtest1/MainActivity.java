@@ -3,6 +3,7 @@ package com.example.administrator.mysoundtest1;
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.media.SoundPool;
 import android.os.Environment;
@@ -11,6 +12,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
 import java.io.File;
@@ -78,11 +80,33 @@ public class MainActivity extends AppCompatActivity {
             mediaRecorder.prepare();
             mediaRecorder.start();
         } catch (IOException e) {
-            e.printStackTrace();
+            Log.i("brad", e.toString());
         }
 
 
     }
     public void test4(View view) {
+        if (mediaRecorder != null){
+            mediaRecorder.stop();
+            mediaRecorder.release();
+            mediaRecorder = null;
+        }
+
+
+    }
+
+    public void test5(View view) {
+        File sdroot = Environment.getExternalStorageDirectory();
+        File rfile = new File(sdroot, "brad.3gp");
+
+        MediaPlayer mediaPlayer = new MediaPlayer();
+        try {
+            mediaPlayer.setDataSource(rfile.getAbsolutePath());
+            mediaPlayer.prepare();
+            mediaPlayer.start();
+        } catch (IOException e) {
+            Log.i("brad", e.toString());
+        }
+
     }
 }
