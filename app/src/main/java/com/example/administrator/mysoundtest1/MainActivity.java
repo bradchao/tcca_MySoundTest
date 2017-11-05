@@ -14,6 +14,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.widget.ImageView;
 
 import java.io.File;
 import java.io.IOException;
@@ -22,6 +25,9 @@ public class MainActivity extends AppCompatActivity {
     private SoundPool sp;
     private int s1, s2;
     private MediaRecorder mediaRecorder;
+    private ImageView img;
+
+    private Animation am;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +63,13 @@ public class MainActivity extends AppCompatActivity {
         sp = new SoundPool(2, AudioManager.STREAM_MUSIC,0);
         s2 = sp.load(this, R.raw.s2,1);
         s1 = sp.load(this, R.raw.s1,1);
+
+        img = (ImageView)findViewById(R.id.img);
+
+        am = new AlphaAnimation(1f,0f);
+        am.setDuration(500);
+        am.setRepeatCount(-1);
+
     }
 
     public void test1(View view) {
@@ -79,6 +92,9 @@ public class MainActivity extends AppCompatActivity {
         try {
             mediaRecorder.prepare();
             mediaRecorder.start();
+
+            img.setAnimation(am);
+            img.startAnimation(am);
         } catch (IOException e) {
             Log.i("brad", e.toString());
         }
@@ -90,6 +106,7 @@ public class MainActivity extends AppCompatActivity {
             mediaRecorder.stop();
             mediaRecorder.release();
             mediaRecorder = null;
+            img.setAnimation(null);
         }
 
 

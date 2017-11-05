@@ -38,5 +38,11 @@
         android:onClick="test5"
         android:text="test5"
         />
+    <ImageView
+        android:id="@+id/img"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/recording"
 
+        />
 </LinearLayout>
