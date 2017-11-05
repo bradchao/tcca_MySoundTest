@@ -1,12 +1,14 @@
 package com.example.administrator.mysoundtest1;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.media.SoundPool;
 import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
@@ -80,6 +82,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void test3(View view) {
+        if (mediaRecorder != null) return;
+
         File sdroot = Environment.getExternalStorageDirectory();
         File rfile = new File(sdroot, "brad.3gp");
 
@@ -125,5 +129,20 @@ public class MainActivity extends AppCompatActivity {
             Log.i("brad", e.toString());
         }
 
+    }
+
+    public void test6(View view) {
+        Intent it = new Intent(MediaStore.Audio.Media.RECORD_SOUND_ACTION);
+        startActivityForResult(it, 1);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK){
+            Log.i("brad", "ok");
+        }else if(resultCode == RESULT_CANCELED){
+            Log.i("brad", "xx");
+        }
     }
 }
