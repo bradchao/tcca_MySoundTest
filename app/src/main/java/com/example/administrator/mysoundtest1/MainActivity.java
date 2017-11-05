@@ -1,8 +1,10 @@
 package com.example.administrator.mysoundtest1;
 
 import android.Manifest;
+import android.content.ContentResolver;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
@@ -144,11 +146,27 @@ public class MainActivity extends AppCompatActivity {
         if (resultCode == RESULT_OK){
             uri = data.getData();
             Log.i("brad", uri.getPath());
+            Log.i("brad", getUriString(uri));
 
         }else if(resultCode == RESULT_CANCELED){
             Log.i("brad", "xx");
         }
     }
+
+    private String getUriString(Uri uri1){
+        String[] field = {MediaStore.Audio.Media.DATA};
+        ContentResolver cr = getContentResolver();
+        Cursor c =
+                cr.query(uri1, field,null,null,null);
+        int i = c.getColumnIndex(MediaStore.Audio.Media.DATA);
+        c.moveToFirst();
+        return c.getString(i);
+
+
+
+
+    }
+
 
     public void test7(View view) {
         MediaPlayer mediaPlayer = new MediaPlayer();
