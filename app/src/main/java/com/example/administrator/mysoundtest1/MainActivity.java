@@ -7,6 +7,7 @@ import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.media.SoundPool;
+import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
@@ -30,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     private ImageView img;
 
     private Animation am;
+    private Uri uri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -140,9 +142,22 @@ public class MainActivity extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK){
-            Log.i("brad", "ok");
+            uri = data.getData();
+            Log.i("brad", uri.getPath());
+
         }else if(resultCode == RESULT_CANCELED){
             Log.i("brad", "xx");
+        }
+    }
+
+    public void test7(View view) {
+        MediaPlayer mediaPlayer = new MediaPlayer();
+        try {
+            mediaPlayer.setDataSource(this, uri);
+            mediaPlayer.prepare();
+            mediaPlayer.start();
+        } catch (IOException e) {
+            Log.i("brad", e.toString());
         }
     }
 }
